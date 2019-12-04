@@ -18,9 +18,10 @@ fn inc_check(n: i32) -> bool {
     let mut d_iter = digits(n).peekable();
 
     while let Some(d) = d_iter.next() {
-        match (d, d_iter.peek()) {
-            (d, Some(&d_next)) if d < d_next => return false,
-            _ => (),
+        if let Some(&d_next) = d_iter.peek() {
+            if d < d_next {
+                return false;
+            }
         }
     }
     true
@@ -30,9 +31,10 @@ fn adj_check(n: i32) -> bool {
     let mut d_iter = digits(n).peekable();
 
     while let Some(d) = d_iter.next() {
-        match (d, d_iter.peek()) {
-            (d, Some(&d_next)) if d == d_next => return true,
-            _ => (),
+        if let Some(&d_next) = d_iter.peek() {
+            if d == d_next {
+                return true;
+            }
         }
     }
     false
@@ -43,9 +45,10 @@ fn adj_check_2(n: i32) -> bool {
     let mut streak = 0;
 
     while let Some(d) = d_iter.next() {
-        match (d, d_iter.peek()) {
-            (d, Some(&d_next)) if d == d_next => streak += 1,
-            _ => {
+        if let Some(&d_next) = d_iter.peek() {
+            if d == d_next {
+                streak += 1;
+            } else {
                 if streak == 1 {
                     return true;
                 }
@@ -54,7 +57,7 @@ fn adj_check_2(n: i32) -> bool {
         }
     }
 
-    false
+    streak == 1
 }
 
 fn main() {
