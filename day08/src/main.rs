@@ -21,7 +21,7 @@ fn main() {
     let twos = layer.iter().filter(|&&v| v == 2).count();
     println!("Part 1: {}", ones * twos);
 
-    let mut pic = vec![];
+    println!("Part 2:");
     for y in 0..HEIGHT {
         for x in 0..WIDTH {
             let val = dat
@@ -34,14 +34,7 @@ fn main() {
             // .fold(2, |acc, p| if acc == 2 { p } else { acc });
             // Using try_fold in an ugly way but it is short-circuting:
             // .try_fold(2, |acc, p| if acc == 2 { Ok(p) } else { Err(acc) });
-            pic.push(val);
-        }
-    }
-
-    println!("Part 2:");
-    for line in pic.chunks(WIDTH) {
-        for &p in line {
-            if p == 1 {
+            if val == 1 {
                 print!("▓");
             } else {
                 print!(" ");
