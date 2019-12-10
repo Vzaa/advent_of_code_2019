@@ -66,23 +66,8 @@ fn get_los(p: Pos, starmap: &StarMap) -> usize {
         .count()
 }
 
-fn calc_slope(p: Pos) -> (i32, f32) {
-    let y = -p.1 as f32; // want positive y to be up
-    let mut x = p.0 as f32;
-    if x == 0.0 {
-        x = 0.00001;
-    }
-
-    let abs_slope = y.abs() / x.abs();
-    if x >= 0.0 && y >= 0.0 {
-        (3, abs_slope)
-    } else if x >= 0.0 && y < 0.0 {
-        (2, abs_slope)
-    } else if x < 0.0 && y < 0.0 {
-        (1, -abs_slope)
-    } else {
-        (0, -abs_slope)
-    }
+fn calc_slope(p: Pos) -> f32 {
+    (p.0 as f32).atan2(p.1 as f32)
 }
 
 fn ordered_hitlist(p: Pos, starmap: &StarMap) -> Vec<Pos> {
