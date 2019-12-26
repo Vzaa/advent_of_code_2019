@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::iter::repeat;
 
 fn main() {
@@ -35,7 +34,7 @@ fn main() {
         .collect();
 
     let offset: usize = txt[0..7].parse().unwrap();
-    let mut lut = HashMap::new();
+    let mut lut = vec![vec![-1; v.len()]; 101];
 
     // Prefill the LUT so we don't blow the stack
     for x in (offset..v.len()).rev() {
@@ -52,9 +51,9 @@ fn main() {
     println!();
 }
 
-fn get_at(p: (usize, usize), v: &[i16], lut: &mut HashMap<(usize, usize), i16>) -> i16 {
-    if let Some(&val) = lut.get(&p) {
-        return val;
+fn get_at(p: (usize, usize), v: &[i16], lut: &mut [Vec<i16>]) -> i16 {
+    if lut[p.1][p.0] != -1 {
+        return lut[p.1][p.0];
     }
 
     let val = if p.1 == 0 || p.0 == v.len() - 1 {
@@ -65,6 +64,6 @@ fn get_at(p: (usize, usize), v: &[i16], lut: &mut HashMap<(usize, usize), i16>) 
         (get_at(above, v, lut) + get_at(right, v, lut)) % 10
     };
 
-    lut.insert(p, val);
+    lut[p.1][p.0] = val;
     val
 }
